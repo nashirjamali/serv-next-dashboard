@@ -33,7 +33,7 @@ export default function GradientMultiAreaChart({ gradientColors, seriesData }) {
       curve: 'smooth',
     },
     xaxis: {
-      categories: seriesData?.labels,
+      categories: seriesData?.labels || [],
       axisTicks: {
         show: false,
       },
@@ -69,7 +69,7 @@ export default function GradientMultiAreaChart({ gradientColors, seriesData }) {
     },
   };
 
-  const series = seriesData?.series;
+  const series = seriesData?.series || [];
 
   return (
     <Chart options={options} series={series} type="area" height={'100%'} />
