@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React from 'react';
 import {
   BiCategory,
@@ -7,12 +8,32 @@ import {
   BiClipboard,
   BiBriefcase,
   BiTransferAlt,
-  BiLogOut,
+  BiLogOut
 } from 'react-icons/bi';
-
 import { FiSettings } from 'react-icons/fi';
 
+const SidebarItem = ({ isActive, name, link, icon }) => (
+  <Link
+    className={`${
+      isActive
+        ? 'bg-blue-600 text-white font-medium'
+        : 'text-neutral-500 font-normal bg-none'
+    }
+     hover:bg-blue-600 hover:text-white hover:font-medium p-3 rounded-lg  text-base flex flex-row gap-2 items-center`}
+    href={link}
+  >
+    {icon}
+    {name}
+  </Link>
+);
+
 export default function Sidebar({ children }) {
+  const router = useRouter();
+
+  function isActive(link) {
+    return router.pathname == link;
+  }
+
   return (
     <div className="flex">
       <div className="fixed z-10 bg-white w-60 min-h-screen border-r-[1px]">
@@ -30,56 +51,51 @@ export default function Sidebar({ children }) {
         <div className="flex flex-col justify-between h-[calc(100vh-116px)]">
           {/* Menu */}
           <div className="m-8 flex flex-col gap-4">
-            <Link
-              className="bg-blue-600 text-white font-medium p-3 rounded-lg  text-base flex flex-row gap-2 items-center"
-              href={'/'}
-            >
-              <BiCategory />
-              Dashboard
-            </Link>
+            <SidebarItem
+              icon={<BiCategory />}
+              isActive={isActive('/dashboard')}
+              link={'/dashboard'}
+              name={'Dashboard'}
+            />
 
-            <Link
-              className="hover:bg-blue-600 hover:text-white hover:font-medium text-neutral-500 font-normal p-3 rounded-lg  text-base flex flex-row gap-2 items-center"
-              href={'/statistics'}
-            >
-              <BiBarChartAlt />
-              Statistics
-            </Link>
+            <SidebarItem
+              icon={<BiBarChartAlt />}
+              isActive={isActive('/statistics')}
+              link={'/statistics'}
+              name={'Statistics'}
+            />
 
-            <Link
-              className="hover:bg-blue-600 hover:text-white hover:font-medium text-neutral-500 font-normal p-3 rounded-lg  text-base flex flex-row gap-2 items-center"
-              href={'/orders'}
-            >
-              <BiClipboard />
-              Orders
-            </Link>
+            <SidebarItem
+              icon={<BiClipboard />}
+              isActive={isActive('/orders')}
+              link={'/orders'}
+              name={'Orders'}
+            />
 
-            <Link
-              className="hover:bg-blue-600 hover:text-white hover:font-medium text-neutral-500 font-normal p-3 rounded-lg  text-base flex flex-row gap-2 items-center"
-              href={'/services'}
-            >
-              <BiBriefcase />
-              Services
-            </Link>
+            <SidebarItem
+              icon={<BiBriefcase />}
+              isActive={isActive('/services')}
+              link={'/services'}
+              name={'Services'}
+            />
 
-            <Link
-              className="hover:bg-blue-600 hover:text-white hover:font-medium text-neutral-500 font-normal p-3 rounded-lg  text-base flex flex-row gap-2 items-center"
-              href={'/transactions'}
-            >
-              <BiTransferAlt />
-              Transactions
-            </Link>
+            <SidebarItem
+              icon={<BiTransferAlt />}
+              isActive={isActive('/transactions')}
+              link={'/transactions'}
+              name={'Transactions'}
+            />
           </div>
 
           {/* Second Menu */}
           <div className="m-8 flex flex-col gap-4">
-            <Link
-              className="hover:text-neutral-700 text-neutral-500 font-normal p-3 rounded-lg text-base flex flex-row gap-2 items-center"
-              href={'/settings'}
-            >
-              <FiSettings />
-              Settings
-            </Link>
+            <SidebarItem
+              icon={<FiSettings />}
+              isActive={isActive('/settings')}
+              link={'/settings'}
+              name={'Settings'}
+            />
+            
             <Link
               className="hover:text-neutral-700 text-neutral-500 font-normal p-3 rounded-lg text-base flex flex-row gap-2 items-center"
               href={'/logout'}
